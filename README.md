@@ -1,8 +1,5 @@
 # ChatGB10 — A Private Multi-Model AI Router
 
-![Uploading image.png…]()
-
-
 Turn a desk-side AI box (built and tuned on a **Dell Pro Max with GB10**, but works on any Ollama host) into a private, four-tier AI assistant — **chat, code, reasoning, vision, and document reading** — behind one OpenAI-compatible endpoint, with a built-in web UI. Nothing leaves your network.
 
 > One door, and the right brain answers every time.
