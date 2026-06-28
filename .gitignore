@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+chats.json
+/tmp/
+*.log
+
+# local runtime data — never commit
+rag_store/
+.venv/
+.DS_Store

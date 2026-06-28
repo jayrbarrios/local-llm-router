@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------------------
+# ChatGB10 — local model router configuration
+# ---------------------------------------------------------------------------
+# Every tier is served by Ollama (OpenAI-compatible API on :11434). Ollama
+# loads/unloads models on demand. Model names must match `ollama list` exactly.
+#
+# The defaults below are a sensible high-capacity set. Swap in smaller models
+# for modest hardware — e.g. brain: gpt-oss:20b, coder: qwen2.5-coder:7b.
+# ---------------------------------------------------------------------------
+
+routes:
+  fast:
+    base_url: http://127.0.0.1:11434/v1
+    model: llama3.2
+    description: Quick replies, simple facts, greetings, light rewrites. Also the classifier.
+
+  coder:
+    base_url: http://127.0.0.1:11434/v1
+    model: qwen3.6:35b-a3b        # MoE coder; or qwen2.5-coder:14b on smaller boxes
+    description: Code, debugging, refactoring, shell, SQL, config, stack traces.
+
+  brain:
+    base_url: http://127.0.0.1:11434/v1
+    model: gpt-oss:120b           # or gpt-oss:20b if you have less memory
+    description: Hard reasoning, analysis, planning, math, long-form writing.
+
+  vision:
+    base_url: http://127.0.0.1:11434/v1
+    model: qwen2.5vl:7b
+    description: Images, screenshots, charts, diagrams, photos. Auto-selected when an image is attached.
+
+router:
+  classifier_route: fast          # keep this on a small, always-quick model
+  default_route: brain            # used when the classifier is unsure
+  auto_model_names: [auto, chatgb10]
+
+  category_map:
+    simple: fast
+    code: coder
+    reasoning: brain
+
+  # Phrases that force the "code" route before the classifier even runs.
+  code_keywords:
+    - debug
+    - refactor
+    - traceback
+    - stack trace
+    - segfault
+    - exception
+    - compile
+    - unit test
+    - regex
+    - "git "
+    - dockerfile
+    - kubernetes
+    - terraform
+    - powershell
+    - bash script
+
+# --------------------------------------------------------------------------- #
+# Knowledge base (RAG) — local Retrieval-Augmented Generation
+# --------------------------------------------------------------------------- #
+rag:
+  embed_model: nomic-embed-text   # pull first: ollama pull nomic-embed-text
+  chunk_chars: 1200               # characters per chunk
+  chunk_overlap: 200              # overlap between chunks
+  top_k: 5                        # chunks retrieved per question
+  answer_route: brain             # which chat tier answers @kb questions

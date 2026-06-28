@@ -1,0 +1,22 @@
+[Unit]
+Description=ChatGB10 — local model router
+After=network-online.target ollama.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+# --- EDIT THESE TWO LINES for your machine ---
+User=YOUR_USERNAME
+WorkingDirectory=/path/to/local-llm-router
+# ---------------------------------------------
+ExecStart=/usr/bin/python3 -m uvicorn router:app --host 0.0.0.0 --port 8000
+Restart=on-failure
+RestartSec=3
+# --- Optional: speech-to-text tuning (uncomment to override defaults) ---
+# Environment=CHATGB10_STT_BACKEND=auto
+# Environment=CHATGB10_STT_MODEL=base
+# Environment=CHATGB10_STT_DEVICE=auto
+# Environment=CHATGB10_STT_LANGUAGE=
+
+[Install]
+WantedBy=multi-user.target
