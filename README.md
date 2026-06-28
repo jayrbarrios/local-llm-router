@@ -168,4 +168,4 @@ MIT © 2026 Jay-R Barrios. See [LICENSE](LICENSE).
 
 ---
 
-Built on a Dell Pro Max with GB10. Full write-up on [LABDEMO]([https://jayrbarrios.com/2026/06/08/building-a-private-multi-model-ai-router-on-a-dell-pro-max-with-gb10/])
+Built on a Dell Pro Max with GB10. Full write-up on [LABDEMO](https://jayrbarrios.com/2026/06/08/building-a-private-multi-model-ai-router-on-a-dell-pro-max-with-gb10/)
